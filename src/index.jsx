@@ -1,8 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { CartProvider } from './CartContext';
 import Pages from './Routes/Routes';
-import { CartProvider } from 'react-use-cart'
-
 
 ReactDOM.render(
   <React.StrictMode>

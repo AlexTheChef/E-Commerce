@@ -1,22 +1,36 @@
-import React from 'react';
-import ItemCard from './ItemCard';
+import React, { useContext } from 'react';
+import { CartContext } from '../CartContext'
 import data from '../Data/Data';
+import '../App.css';
 
 function Home() {
-    return (
-        <>
-        <h1 className="text-center mt-3">All Items</h1>
-            <section className="py-4 container">
-                <div className='row justify-content-center'>
-                    {data.productData.map((item, index)=>{
-                        return(
-                            <ItemCard title={item.title} desc={item.desc} img={item.img} price={item.price} item={item} key={index}/>
-                        )
-                    })}
+  const cartContext = useContext(CartContext);
+  const { productData } = data;
+
+  return (
+    <div className="home-container">
+      <h1>All Items</h1>
+      <section>
+        <div className='home-row'>
+          {productData.map((item, index) => {
+            return (
+              <div className="home-size" key={index}>
+                <div className="home-shadow">
+                  <img className="home-img" src={item.img} alt="" />
+                  <div className="home-info ">
+                    <h5>{item.title}</h5>
+                    <h5>${item.price}</h5>
+                    <button className="home-btn" onClick={() => cartContext.onAdd(item)} >Add to Cart</button>
+                  </div>
                 </div>
-            </section>
-        </>
-    );
+              </div>
+            )
+          })}
+        </div>
+      </section>
+      <h1 className='row justify-content-center'>Cart</h1>
+    </div>
+  );
 }
 
 export default Home;

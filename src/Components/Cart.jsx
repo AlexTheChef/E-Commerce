@@ -1,64 +1,52 @@
-import React from 'react';
-import { useCart } from 'react-use-cart'
+import React, { useContext } from 'react';
+import { CartContext } from '../CartContext'
+import '../App.css';
 import Navbar from './Navbar';
 
-function Cart() {
+function Cart(props) {
+  const contextValue = useContext(CartContext)
+  const totalPrice = contextValue.cartItems.reduce((a, c) => a + c.qty * c.price, 0);
 
-    const {
-        isEmpty,
-        totalUniqueItems,
-        items,
-        totalItems,
-        cartTotal,
-        updateItemQuantity,
-        removeItem,
-        emptyCart
-    } = useCart()
+  return (
+    <div className="home-container">
+      <Navbar />
+      <div>{contextValue.cartItems.length === 0 && <h1>Cart is Empty</h1>}</div>
+      {contextValue.cartItems.map((item) => (
+        <div key={item.id} className="cart-container">
+          <div className="cart-title">{item.title}</div>
+          <div className="cart-btn">
+            <button onClick={() => contextValue.onRemove(item)} className="remove">-</button>
+            <button onClick={() => contextValue.onAdd(item)} className="add">+</button>
+          </div>
 
-    if (isEmpty) return (
-        <div>
-            <Navbar />
-            <h1 className="text-center">Cart is Empty</h1>
+          <div className="cart-price">
+            {item.qty} x ${item.price}
+          </div>
         </div>
-    )
-    return (
-        <div>
-            <Navbar />
-            <section className="py-4 container">
-                <div className="row justify-content-center">
-                    <h5>Cart ({totalUniqueItems}) total items: ({totalItems})</h5>
-                    <table className="table table-light table-hover m-0" >
-                        <tbody>
-                            {items.map((item, index) => {
-                                return (
-                                    <tr key={index}>
-                                        <td>
-                                            <img src={item.img} alt='' style={{ height: '100px' }} />
-                                        </td>
-                                        <td>{item.title}</td>
-                                        <td>${item.price}</td>
-                                        <td>Quantity ({item.quantity})</td>
-                                        <td>
-                                            <button className="btn btn-info ms-2" onClick={() => updateItemQuantity(item.id, item.quantity - 1)} >-</button>
-                                            <button className="btn btn-info ms-2" onClick={() => updateItemQuantity(item.id, item.quantity + 1)} >+</button>
-                                            <button className="btn btn-danger ms-2" onClick={() => removeItem(item.id)} >Remove Item</button>
-                                        </td>
-                                    </tr>
-                                )
-                            })}
-                        </tbody>
-                    </table>
-                </div>
-                <div className="col-auto ms-auto m-2" >
-                    <h2 className="mx-2">Total Price: ${cartTotal}</h2>
-                </div>
-                <div className="col-auto" >
-                    <button className="btn btn-danger m-2" onClick={() => emptyCart()}>Clear Cart</button>
-                    <button className="btn btn-primary m-2" >Buy Now</button>
-                </div>
-            </section>
-        </div>
-    );
+      ))}
+
+      {contextValue.cartItems.length !== 0 && (
+        <>
+          <hr></hr>
+          <div className="total-price">
+            <div >
+              <strong>Total Price</strong>
+            </div>
+            <div >
+              <strong>${totalPrice}</strong>
+            </div>
+          </div>
+          <hr />
+          <div className='cart-buttons'>
+            <button className="home-btn" onClick={() => alert(`Checkout's working!`)}>
+              Checkout
+            </button>
+            <button className="home-btn-red" onClick={() => contextValue.emptyCart()}>Empty Cart</button>
+          </div>
+        </>
+      )}
+    </div>
+  );
 }
 
 export default Cart;
