@@ -1,14 +1,25 @@
-import React, { useContext, useState } from 'react';
+import React, { ChangeEvent, useContext, useState, useEffect } from 'react';
 import { CartContext } from '../CartContext'
 import data from '../Data/Data';
 import '../App.css';
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom"
 
 function Home() {
   const cartContext = useContext(CartContext);
   const { productData } = data;
   const [searchTerm, setSearchTerm] = useState('')
+  const navigate = useNavigate()
 
+  useEffect(() => {
+    const params = new URLSearchParams()
+    if (searchTerm) {
+      params.append("search", searchTerm)
+    } else {
+      params.delete("search")
+    }
+    navigate({search: params.toString()})
+  }, [searchTerm, navigate])
 
   return (
     <div className="home-container">
