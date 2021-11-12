@@ -28,7 +28,6 @@ function Home() {
           })}
         </div>
       </section>
-      <h1 className='row justify-content-center'>Cart</h1>
     </div>
   );
 }

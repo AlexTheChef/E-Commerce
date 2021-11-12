@@ -26,7 +26,7 @@ function Cart(props) {
       ))}
 
       {contextValue.cartItems.length !== 0 && (
-        <>
+        <div className='cart-info'>
           <hr></hr>
           <div className="total-price">
             <div >
@@ -43,7 +43,7 @@ function Cart(props) {
             </button>
             <button className="home-btn-red" onClick={() => contextValue.emptyCart()}>Empty Cart</button>
           </div>
-        </>
+        </div>
       )}
     </div>
   );
