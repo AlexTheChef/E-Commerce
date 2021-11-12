@@ -1,12 +1,12 @@
 import React from 'react';
-import Navbar from './Navbar';
+import { Link } from "react-router-dom";
 import '../App.css';
 
 function Error() {
     return (
-        <div>
-            <Navbar />
-            <h1 className="text-center" >You got lost my friend</h1>
+        <div className="home-container">
+            <h1>You got lost my friend</h1>
+          <Link to='/'>  <div>Get Back</div> </Link>
         </div>
     );
 }

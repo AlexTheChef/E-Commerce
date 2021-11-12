@@ -182,3 +182,21 @@ body {
     display: flex;
     flex-direction: column;
 }
+
+.info-img {
+    width: 450px;
+    height: auto;
+}
+
+.search {
+    border-radius: 5px;
+    border: 1px solid rgb(143, 143, 143);
+    padding: 5px 10px 5px 10px;
+    width: 350px;
+    margin-top: 30px;
+    margin-bottom: 40px;
+}
+
+textarea:focus, input:focus{
+    outline: none;
+}
